@@ -1,0 +1,127 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --color-cyan: #00ffff;
+  --color-magenta: #ff00ff;
+  --color-glitch-bg: #050505;
+  --font-pixel: "Press Start 2P", system-ui;
+  --font-machine: "VT323", monospace;
+}
+
+@layer base {
+  body {
+    @apply bg-glitch-bg text-white font-machine overflow-hidden selection:bg-magenta selection:text-white;
+    background-image: 
+      linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%),
+      linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+    background-size: 100% 2px, 3px 100%;
+  }
+
+  /* Scanline effect */
+  body::before {
+    content: " ";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+    z-index: 100;
+    background-size: 100% 2px, 3px 100%;
+    pointer-events: none;
+  }
+
+  /* Static Noise Overlay */
+  body::after {
+    content: "";
+    position: fixed;
+    top: -50%;
+    left: -50%;
+    right: -50%;
+    bottom: -50%;
+    width: 200%;
+    height: 200%;
+    background: transparent url('http://assets.iceable.com/img/noise-transparent.png') repeat;
+    background-image: url('https://media.giphy.com/media/oEI9uWUqnW3CeEnwL6/giphy.gif');
+    opacity: 0.03;
+    z-index: 99;
+    pointer-events: none;
+    animation: noise 0.2s infinite;
+  }
+}
+
+@keyframes noise {
+  0% { transform: translate(0,0) }
+  10% { transform: translate(-5%,-5%) }
+  20% { transform: translate(-10%,5%) }
+  30% { transform: translate(5%,-10%) }
+  40% { transform: translate(-5%,15%) }
+  50% { transform: translate(-10%,5%) }
+  60% { transform: translate(15%,0) }
+  70% { transform: translate(0,10%) }
+  80% { transform: translate(-15%,0) }
+  90% { transform: translate(10%,5%) }
+  100% { transform: translate(5%,0) }
+}
+
+@keyframes screen-tear {
+  0% { transform: translateX(0); }
+  5% { transform: translateX(5px) skewX(5deg); }
+  10% { transform: translateX(-5px) skewX(-5deg); }
+  15% { transform: translateX(0); }
+  100% { transform: translateX(0); }
+}
+
+.animate-tear {
+  animation: screen-tear 4s infinite;
+}
+
+.glitch-border {
+  @apply border-2 border-cyan shadow-[4px_4px_0px_#ff00ff];
+  transition: all 0.1s;
+}
+
+.glitch-border:hover {
+  @apply shadow-[-4px_-4px_0px_#ff00ff] translate-x-[2px] translate-y-[2px];
+}
+
+.text-glitch {
+  @apply font-pixel text-cyan;
+  text-shadow: 2px 2px #ff00ff;
+}
+
+.text-glitch-magenta {
+  @apply font-pixel text-magenta;
+  text-shadow: 2px 2px #00ffff;
+}
+
+/* CRT Flicker */
+@keyframes flicker {
+  0% { opacity: 0.27861; }
+  5% { opacity: 0.34769; }
+  10% { opacity: 0.23604; }
+  15% { opacity: 0.90626; }
+  20% { opacity: 0.18128; }
+  25% { opacity: 0.83891; }
+  30% { opacity: 0.65583; }
+  35% { opacity: 0.57807; }
+  40% { opacity: 0.26559; }
+  45% { opacity: 0.84693; }
+  50% { opacity: 0.96019; }
+  55% { opacity: 0.08594; }
+  60% { opacity: 0.20313; }
+  65% { opacity: 0.71988; }
+  70% { opacity: 0.53455; }
+  75% { opacity: 0.37288; }
+  80% { opacity: 0.71428; }
+  85% { opacity: 0.70419; }
+  90% { opacity: 0.7003; }
+  95% { opacity: 0.36108; }
+  100% { opacity: 0.24387; }
+}
+
+.crt-flicker {
+  animation: flicker 0.15s infinite;
+}
